@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAlpha Store - Premium E-Commerce</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo" data-aos="fade-right">
+                <i class="fas fa-store"></i>
+                <span>CodeAlpha</span>
+                <span class="logo-dot">.</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
+                <div id="auth-links">
+                    <a href="login.html" class="btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html" class="btn-primary"><i class="fas fa-user-plus"></i> Register</a>
+                </div>
+                <div id="user-info" style="display:none;">
+                    <div class="user-dropdown">
+                        <span id="user-name"><i class="fas fa-user-circle"></i> Welcome</span>
+                        <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <div class="hero-badge">
+                <i class="fas fa-award"></i> Premium Collection
+            </div>
+            <h1>Discover Amazing <br><span class="gradient-text">Products</span></h1>
+            <p>Shop the latest trends with unbeatable prices. Quality products, fast delivery.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn-hero-primary">
+                    <i class="fas fa-shopping-bag"></i> Shop Now
+                </a>
+                <a href="#categories" class="btn-hero-secondary">
+                    <i class="fas fa-tag"></i> Categories
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat" data-aos="fade-up" data-aos-delay="200">
+                    <span class="stat-number" id="productCount">50+</span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat" data-aos="fade-up" data-aos-delay="400">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat" data-aos="fade-up" data-aos-delay="600">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Secure</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="fade-left" data-aos-duration="1000">
+            <div class="hero-circle"></div>
+            <div class="floating-card card-1">
+                <i class="fas fa-shipping-fast"></i>
+                <span>Free Delivery</span>
+            </div>
+            <div class="floating-card card-2">
+                <i class="fas fa-headset"></i>
+                <span>24/7 Support</span>
+            </div>
+            <div class="floating-card card-3">
+                <i class="fas fa-undo"></i>
+                <span>Easy Returns</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="categories" class="categories-section">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Browse <span class="gradient-text">Categories</span></h2>
+            <p>Find exactly what you're looking for</p>
+        </div>
+        <div class="categories-grid">
+            <button class="category-btn active" data-category="all" onclick="filterCategory('all')">
+                <i class="fas fa-th-large"></i> All
+            </button>
+            <button class="category-btn" data-category="electronics" onclick="filterCategory('electronics')">
+                <i class="fas fa-laptop"></i> Electronics
+            </button>
+            <button class="category-btn" data-category="clothing" onclick="filterCategory('clothing')">
+                <i class="fas fa-tshirt"></i> Clothing
+            </button>
+            <button class="category-btn" data-category="books" onclick="filterCategory('books')">
+                <i class="fas fa-book"></i> Books
+            </button>
+            <button class="category-btn" data-category="home" onclick="filterCategory('home')">
+                <i class="fas fa-home"></i> Home
+            </button>
+            <button class="category-btn" data-category="beauty" onclick="filterCategory('beauty')">
+                <i class="fas fa-spa"></i> Beauty
+            </button>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="products-section">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Featured <span class="gradient-text">Products</span></h2>
+            <p>Handpicked items just for you</p>
+        </div>
+        <div class="search-bar" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search products..." onkeypress="if(event.key==='Enter') searchProducts()">
+            <button onclick="searchProducts()"><i class="fas fa-search"></i> Search</button>
+        </div>
+        <div id="product-grid" class="product-grid"></div>
+        <div id="loading" style="display:none; text-align:center; padding:3rem;">
+            <div class="loader"></div>
+            <p style="color:#6c6c8a; margin-top:1rem;">Loading amazing products...</p>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" data-aos="fade-up">
+        <div class="newsletter-content">
+            <h2>Subscribe to Our <span class="gradient-text">Newsletter</span></h2>
+            <p>Get the latest updates on new products and exclusive offers</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email">
+                <button><i class="fas fa-paper-plane"></i> Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section" data-aos="fade-up">
+                <h3><i class="fas fa-store"></i> CodeAlpha</h3>
+                <p>Your one-stop shop for premium products</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="cart.html">Cart</a>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="400">
+                <h4>Customer Service</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Returns</a>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="600">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> support@codealpha.com</p>
+                <p><i class="fas fa-phone"></i> +91 93365 76683</p>
+                <p><i class="fas fa-map-marker-alt"></i> India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CodeAlpha. Made with <i class="fas fa-heart" style="color:#e74c3c;"></i> by CodeAlpha Team</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <button id="scrollTop" class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/products.js"></script>
+    <script src="scripts/auth.js"></script>
+</body>
+</html>

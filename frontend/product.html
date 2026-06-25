@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - CodeAlpha Store</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo" data-aos="fade-right">
+                <i class="fas fa-store"></i>
+                <span>CodeAlpha</span>
+                <span class="logo-dot">.</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
+                <div id="auth-links">
+                    <a href="login.html" class="btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="register.html" class="btn-primary"><i class="fas fa-user-plus"></i> Register</a>
+                </div>
+                <div id="user-info" style="display:none;">
+                    <div class="user-dropdown">
+                        <span id="user-name"><i class="fas fa-user-circle"></i> Welcome</span>
+                        <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Details -->
+    <section class="product-details-section">
+        <div class="product-details-container">
+            <!-- Product Image -->
+            <div class="product-image-wrapper" data-aos="fade-right" data-aos-duration="800">
+                <div class="product-image-main">
+                    <img id="product-image" src="" alt="Product">
+                    <div class="product-image-badge" id="stockBadge">In Stock</div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info-wrapper" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                <div class="product-breadcrumb">
+                    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span id="product-category-breadcrumb">Category</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span id="product-name-breadcrumb">Product</span>
+                </div>
+
+                <div class="product-category-tag" id="product-category-tag">
+                    <i class="fas fa-tag"></i> <span id="product-category">Category</span>
+                </div>
+
+                <h1 class="product-title" id="product-name">Product Name</h1>
+
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="rating-text">4.5 (120 reviews)</span>
+                </div>
+
+                <div class="product-price-wrapper">
+                    <span class="product-price" id="product-price">$0.00</span>
+                    <span class="product-price-old" id="product-price-old">$0.00</span>
+                    <span class="product-discount" id="product-discount">Save 20%</span>
+                </div>
+
+                <div class="product-stock-info" id="product-stock-info">
+                    <i class="fas fa-box"></i>
+                    <span id="product-stock">In Stock: 0</span>
+                </div>
+
+                <div class="product-description">
+                    <h4><i class="fas fa-align-left"></i> Description</h4>
+                    <p id="product-description">Product description goes here...</p>
+                </div>
+
+                <div class="product-features">
+                    <h4><i class="fas fa-check-circle"></i> Features</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Premium quality</li>
+                        <li><i class="fas fa-check"></i> 1-year warranty</li>
+                        <li><i class="fas fa-check"></i> Free shipping</li>
+                        <li><i class="fas fa-check"></i> 30-day return policy</li>
+                    </ul>
+                </div>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <label><i class="fas fa-sort-amount-up"></i> Quantity</label>
+                        <div class="quantity-controls">
+                            <button onclick="decreaseQuantity()"><i class="fas fa-minus"></i></button>
+                            <span id="quantity-display">1</span>
+                            <input type="hidden" id="quantity" value="1">
+                            <button onclick="increaseQuantity()"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-add-to-cart" onclick="addToCart()">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn-buy-now" onclick="buyNow()">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>SKU: <span id="product-sku">PRD-001</span></span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-box"></i>
+                        <span>Category: <span id="product-category-meta">Category</span></span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Added: <span id="product-date">2024</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="related-products" data-aos="fade-up" data-aos-delay="400">
+            <div class="section-header">
+                <h2>You May Also <span class="gradient-text">Like</span></h2>
+                <p>Discover more amazing products</p>
+            </div>
+            <div id="related-products-grid" class="product-grid">
+                <!-- Related products will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section" data-aos="fade-up">
+                <h3><i class="fas fa-store"></i> CodeAlpha</h3>
+                <p>Your one-stop shop for premium products</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
+                <h4>Quick Links</h4>
+                <a href="index.html"><i class="fas fa-chevron-right"></i> Home</a>
+                <a href="cart.html"><i class="fas fa-chevron-right"></i> Cart</a>
+                <a href="login.html"><i class="fas fa-chevron-right"></i> Login</a>
+                <a href="register.html"><i class="fas fa-chevron-right"></i> Register</a>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="400">
+                <h4>Customer Service</h4>
+                <a href="#"><i class="fas fa-chevron-right"></i> Help Center</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Terms & Conditions</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a>
+                <a href="#"><i class="fas fa-chevron-right"></i> Returns</a>
+            </div>
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="600">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> support@codealpha.com</p>
+                <p><i class="fas fa-phone"></i> +91 93365 76683</p>
+                <p><i class="fas fa-map-marker-alt"></i> India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CodeAlpha. Made with <i class="fas fa-heart"></i> by CodeAlpha Team</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button id="scrollTop" class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 100 });
+    </script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/products.js"></script>
+    <script src="scripts/auth.js"></script>
+</body>
+</html>
