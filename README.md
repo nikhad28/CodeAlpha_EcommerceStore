@@ -32,6 +32,14 @@ A full-stack e-commerce application built with Express.js, MongoDB, and vanilla 
 - Node.js (v14 or higher)
 - MongoDB (local installation or MongoDB Atlas)
 
+## Future Enhancements
+
+- Payment Gateway Integration
+- Wishlist
+- Admin Dashboard
+- Product Reviews
+- Order Tracking
+
 ### Setup Instructions
 
 1. **Clone the repository**
