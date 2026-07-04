@@ -26,6 +26,13 @@ A full-stack e-commerce application built with Express.js, MongoDB, and vanilla 
 - CSS3 (with responsive design)
 - Vanilla JavaScript (ES6+)
 
+## CodeAlpha_EcommerceStore
+│
+├── backend
+├── frontend
+├── images
+├── README.md
+└── package.json
 ## Installation
 
 ### Prerequisites
