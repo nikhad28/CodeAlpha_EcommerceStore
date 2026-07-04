@@ -36,5 +36,4 @@ A full-stack e-commerce application built with Express.js, MongoDB, and vanilla 
 
 1. **Clone the repository**
 ```bash
-git clone <repository-url>
-cd CodeAlpha_EcommerceStore
+git clone https://github.com/nikhad28/CodeAlpha_EcommerceStore.git
