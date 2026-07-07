@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - CodeAlpha Store</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F5F3FF;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            padding: 0 2rem;
+            box-shadow: 0 2px 20px rgba(139, 92, 246, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #6D28D9;
+        }
+        .logo i {
+            color: #8B5CF6;
+        }
+        .logo span {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #4a4a6a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #8B5CF6;
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        #cart-count {
+            background: #8B5CF6;
+            color: white;
+            padding: 1px 8px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4a4a6a;
+        }
+
+        .product-detail-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.06);
+        }
+
+        .product-detail-image {
+            border-radius: 16px;
+            overflow: hidden;
+            background: #F5F3FF;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            min-height: 400px;
+        }
+
+        .product-detail-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .product-detail-info .category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: #F5F3FF;
+            color: #6D28D9;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .product-detail-info h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1F2937;
+        }
+
+        .product-detail-info .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #F59E0B;
+        }
+
+        .product-detail-info .rating span {
+            color: #6B7280;
+        }
+
+        .product-detail-info .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #6D28D9;
+        }
+
+        .product-detail-info .price .old {
+            font-size: 1.2rem;
+            color: #9CA3AF;
+            text-decoration: line-through;
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+
+        .product-detail-info .description {
+            color: #6B7280;
+            line-height: 1.7;
+        }
+
+        .product-detail-info .stock {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #10B981;
+            font-weight: 600;
+        }
+
+        .product-detail-info .stock.out {
+            color: #EF4444;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .quantity-selector label {
+            font-weight: 600;
+            color: #4a4a6a;
+        }
+
+        .quantity-selector .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: #F5F3FF;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+        }
+
+        .quantity-selector .qty-controls button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            color: #4a4a6a;
+        }
+
+        .quantity-selector .qty-controls button:hover {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            color: white;
+        }
+
+        .quantity-selector .qty-controls span {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 700;
+            color: #1F2937;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-add-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.35);
+        }
+
+        .btn-buy-now {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-buy-now:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #8B5CF6;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: #8a8ab0;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            margin-top: 2rem;
+        }
+
+        footer i {
+            color: #8B5CF6;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 1rem 0;
+                gap: 0.8rem;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .product-detail-info h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-detail-info .price {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-detail-container {
+                padding: 1rem;
+            }
+            .product-detail-info h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-store"></i>
+                <span>CodeAlpha</span> Store
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+                <div id="auth-links">
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </div>
+                <div id="user-info" style="display:none;">
+                    <div style="display:flex;align-items:center;gap:1rem;">
+                        <span id="user-name"><i class="fas fa-user-circle"></i> User</span>
+                        <button onclick="logout()" style="background:#EF4444;color:white;border:none;padding:0.4rem 1.2rem;border-radius:8px;cursor:pointer;font-weight:600;">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PRODUCT DETAIL ===== -->
+    <section class="product-detail-section">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Products</a>
+
+        <div class="product-detail-container" id="productDetail">
+            <!-- Will be loaded by JavaScript -->
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>&copy; 2026 <i class="fas fa-heart"></i> CodeAlpha Store. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+    <script>
+        // ============================================
+        // PRODUCTS DATA
+        // ============================================
+        const productsData = [
+            { id: 1, name: 'Wireless Headphones', category: 'Electronics', price: 99.99, oldPrice: 149.99, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop', description: 'Premium wireless headphones with noise cancellation, 40-hour battery life, and crystal clear sound quality.', stock: 15, rating: 4.8 },
+            { id: 2, name: 'Smart Watch', category: 'Electronics', price: 249.99, oldPrice: 299.99, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop', description: 'Advanced smart watch with GPS, heart rate monitoring, sleep tracking, and 7-day battery life.', stock: 8, rating: 4.9 },
+            { id: 3, name: 'Premium T-Shirt', category: 'Clothing', price: 29.99, oldPrice: null, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop', description: '100% organic cotton oversized t-shirt. Breathable, comfortable, and perfect for everyday wear.', stock: 20, rating: 4.5 },
+            { id: 4, name: 'Coding Book', category: 'Books', price: 39.99, oldPrice: 49.99, image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=600&fit=crop', description: 'Master the art of programming with this comprehensive guide covering algorithms, data structures, and more.', stock: 12, rating: 4.7 },
+            { id: 5, name: 'Desk Lamp', category: 'Home', price: 49.99, oldPrice: null, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=600&fit=crop', description: 'Modern LED desk lamp with wireless charging pad, adjustable brightness, and eye-caring technology.', stock: 5, rating: 4.3 },
+            { id: 6, name: 'Face Cream', category: 'Beauty', price: 24.99, oldPrice: 34.99, image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&h=600&fit=crop', description: 'Organic vitamin C face cream with hyaluronic acid. Hydrates, brightens, and reduces fine lines.', stock: 18, rating: 4.6 },
+            { id: 7, name: 'Bluetooth Speaker', category: 'Electronics', price: 79.99, oldPrice: 99.99, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=600&fit=crop', description: 'Portable Bluetooth speaker with 360° sound, waterproof design, and 20-hour playtime.', stock: 10, rating: 4.4 },
+            { id: 8, name: 'Slim Jeans', category: 'Clothing', price: 59.99, oldPrice: null, image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&h=600&fit=crop', description: 'Slim fit stretch denim jeans with premium quality fabric. Comfortable fit for all-day wear.', stock: 7, rating: 4.2 }
+        ];
+
+        // ============================================
+        // GET PRODUCT BY ID
+        // ============================================
+        function getProductById(id) {
+            return productsData.find(p => p.id === parseInt(id));
+        }
+
+        // ============================================
+        // LOAD PRODUCT DETAIL
+        // ============================================
+        function loadProductDetail() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const product = getProductById(id);
+
+            if (!product) {
+                document.getElementById('productDetail').innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:3rem;">
+                        <h2 style="color:#1F2937;">Product not found</h2>
+                        <a href="index.html" style="color:#8B5CF6;">Go back to shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const stars = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 >= 0.5 ? '★' : '');
+            const emptyStars = '☆'.repeat(5 - Math.ceil(product.rating));
+
+            document.getElementById('productDetail').innerHTML = `
+                <div class="product-detail-image">
+                    <img src="${product.image}" alt="${product.name}" />
+                </div>
+                <div class="product-detail-info">
+                    <span class="category">${product.category}</span>
+                    <h1>${product.name}</h1>
+                    <div class="rating">
+                        ${stars}${emptyStars}
+                        <span>(${product.rating} / 5)</span>
+                    </div>
+                    <div class="price">
+                        $${product.price.toFixed(2)}
+                        ${product.oldPrice ? `<span class="old">$${product.oldPrice.toFixed(2)}</span>` : ''}
+                    </div>
+                    <p class="description">${product.description}</p>
+                    <div class="stock ${product.stock < 5 ? 'out' : ''}">
+                        <i class="fas ${product.stock > 0 ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                        ${product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                    </div>
+                    <div class="quantity-selector">
+                        <label><i class="fas fa-sort-amount-up"></i> Quantity:</label>
+                        <div class="qty-controls">
+                            <button onclick="changeQty(-1)">−</button>
+                            <span id="qty-value">1</span>
+                            <button onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-add-cart" onclick="addToCartDetail(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn-buy-now" onclick="buyNow(${product.id})">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================
+        // CHANGE QUANTITY
+        // ============================================
+        let qty = 1;
+
+        function changeQty(change) {
+            qty = Math.max(1, qty + change);
+            document.getElementById('qty-value').textContent = qty;
+        }
+
+        // ============================================
+        // ADD TO CART FROM DETAIL
+        // ============================================
+        function addToCartDetail(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.quantity = (existing.quantity || 1) + qty;
+            } else {
+                cart.push({ id: productId, quantity: qty });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(`✅ ${qty} item(s) added to cart!`);
+            qty = 1;
+            document.getElementById('qty-value').textContent = qty;
+        }
+
+        // ============================================
+        // BUY NOW
+        // ============================================
+        function buyNow(productId) {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.quantity = (existing.quantity || 1) + qty;
+            } else {
+                cart.push({ id: productId, quantity: qty });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            window.location.href = 'cart.html';
+        }
+
+        // ============================================
+        // TOGGLE MENU
+        // ============================================
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        // ============================================
+        // UPDATE CART COUNT
+        // ============================================
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            document.querySelectorAll('#cart-count').forEach(el => el.textContent = count);
+        }
+
+        // ============================================
+        // CHECK AUTH
+        // ============================================
+        function checkAuth() {
+            const user = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+
+            if (user && token) {
+                try {
+                    const userData = JSON.parse(user);
+                    document.getElementById('user-name').innerHTML = `<i class="fas fa-user-circle"></i> ${userData.name || 'User'}`;
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('auth-links').style.display = 'none';
+                } catch (e) {}
+            } else {
+                document.getElementById('user-info').style.display = 'none';
+                document.getElementById('auth-links').style.display = 'flex';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('cart');
+            window.location.href = 'login.html';
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            checkAuth();
+            loadProductDetail();
+        });
+    </script>
+</body>
+</html>
