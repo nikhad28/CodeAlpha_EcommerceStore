@@ -176,11 +176,6 @@ http://localhost:5000
 
 ---
 
-## 📦 backend Page
-
-![Backend](screenshots/mongodb.jpeg)
-
-
 # 🔄 Workflow
 
 ```text
